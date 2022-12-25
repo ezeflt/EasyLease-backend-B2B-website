@@ -100,14 +100,7 @@ req.body.interlocutors.map(async (e) => {
   let newInterloc = await newInterlocutor.save();
 
   // Met à jour le client avec le nouvel interlocuteur
-  let clientToUpdate = await Client.updateOne(
-    {
-      _id: newDoc._id,
-    },
-    {
-      $push: { interlocutor: newInterloc._id },
-    }
-  );
+  let clientToUpdate = await Client.updateOne({_id: newDoc._id,},{$push: { interlocutor: newInterloc._id },});
 });
 
 // Ajoute le client à l'utilisateur associé au token
