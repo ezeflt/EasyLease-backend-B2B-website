@@ -5,6 +5,10 @@ const Scenary = require("../models/scenary");
 const { checkBody } = require("../modules/checkBody");
 const User = require('../models/users')
 
+router.get("/test", (req,res) => {
+  res.json({result:true, message: "TEST PASSED !!"})
+})
+
 router.get("/token/:token", (req, res) => {
   User.findOne({ token: req.params.token })
     .populate({
@@ -70,15 +74,15 @@ router.post("/new", (req, res) => {
   );
 });
 
-router.get("/all", (req, res) => {
-  Scenary.find().then((data) => {
-    if (data) {
-      res.json({ result: true, scenaries: data });
-    } else {
-      res.json({ result: false, error: "Pas de scénarios !" });
-    }
-  });
-});
+// router.get("/all", (req, res) => {
+//   Scenary.find().then((data) => {
+//     if (data) {
+//       res.json({ result: true, scenaries: data });
+//     } else {
+//       res.json({ result: false, error: "Pas de scénarios !" });
+//     }
+//   });
+// });
 
 router.get("/:id", (req, res) => {
   Scenary.findById({ _id: req.params.id }).then((data) => {

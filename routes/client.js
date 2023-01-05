@@ -6,17 +6,17 @@ const Interlocutor = require("../models/interlocutor");
 const { checkBody } = require("../modules/checkBody");
 const { populate } = require("../models/users");
 
-router.get("/allClients", (req, res) => {
-  Client.find({})
-    .populate("interlocutor")
-    .then((data) => {
-      if (data) {
-        res.json({ result: true, clients: data });
-      } else {
-        res.json({ result: false, error: "Aucun client trouvé" });
-      }
-    });
-});
+// router.get("/allClients", (req, res) => {
+//   Client.find({})
+//     .populate("interlocutor")
+//     .then((data) => {
+//       if (data) {
+//         res.json({ result: true, clients: data });
+//       } else {
+//         res.json({ result: false, error: "Aucun client trouvé" });
+//       }
+//     });
+// });
 
 router.get('/id/:clientId', (req,res) => {
   console.log("client en qqq");
@@ -65,14 +65,14 @@ router.post("/uploadClient", async (req, res) => {
       "token", // Ajout du champ "token"
     ])
   ) {
-    res.json({ result: false, error: "Missing or empty fields" });
+    res.json({ result: false, error: "Champs vides ou manquants" });
     return;
   }
 
   // Vérifie l'existence du client
-  let clientData = await Client.findOne({ name: req.body.name });
+  // let clientData = await Client.findOne({ name: req.body.name });
 
-  if (clientData === null) {
+  // if (clientData === null) {
     // Crée un nouveau client
     const newClient = new Client({
       name: req.body.name,
@@ -109,10 +109,10 @@ await User.updateOne({ token: req.body.token },{$push: { clients: newDoc._id },}
 
 // Envoie une réponse positive au client
 res.json({ result: true });
-  } else {
-    // Envoie une réponse négative au client si le client existe déjà
-    res.json({ result: false, error: "Client already exists" });
-  }
+  // } else {
+  //   // Envoie une réponse négative au client si le client existe déjà
+  //   res.json({ result: false, error: "Client existe déja" });
+  // }
 });
 
 router.post("/addInterlocutor", (req, res) => {
@@ -126,7 +126,7 @@ router.post("/addInterlocutor", (req, res) => {
       "email",
     ])
   ) {
-    res.json({ result: false, error: "Missing or empty fields" });
+    res.json({ result: false, error: "Champs vides ou manquants" });
     return;
   }
 
@@ -165,7 +165,7 @@ router.get('/test/:token', (req, res) => {
             if (data) {
                 res.json({ result: true, clientsInfos: data})
             } else {
-                res.json({ message: 'not found' })
+                res.json({ result: false ,message: 'pas trouvé' })
             }
         })
 });
